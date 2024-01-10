@@ -24,7 +24,7 @@ export default function DateRangePicker({ from, to, setDateRange }: Props) {
       }
     } else {
       const fromDate = new Date(from);
-      if (selectedDate <= fromDate) {
+      if (selectedDate <= fromDate || selectedDate.getFullYear() > 1972) {
         alert("To Date can not be before from date");
         return;
       }
