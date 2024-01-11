@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import CustomToolTip from "./CustomTooltip";
 // the below type is manually written by analyzing the api response
 type TData = {
   DATE: string;
@@ -29,7 +30,7 @@ const Charts = (props: { data: TData[] }) => {
   }));
 
   return (
-    <ResponsiveContainer width="80%" height={500}>
+    <ResponsiveContainer width="100%" height={500}>
       <LineChart data={data}>
         <Line
           type="monotone"
@@ -39,9 +40,9 @@ const Charts = (props: { data: TData[] }) => {
           isAnimationActive={true}
         />
         <CartesianGrid stroke="#ccc" strokeDasharray="3 3" opacity={0.5} />
-        <XAxis dataKey="DATE" tickLine={false} />
+        <XAxis tickMargin={5} dataKey="DATE" tickLine={false} color="#000" />
         <YAxis tickLine={false} />
-        <Tooltip labelClassName="text-black " />
+        <Tooltip labelClassName="text-black " content={CustomToolTip} />
         <Legend />
       </LineChart>
     </ResponsiveContainer>

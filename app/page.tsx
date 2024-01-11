@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <ThemeSwitcher />
-      <div className="bg-white dark:bg-black flex flex-col items-center gap-3 dark:text-white w-full">
+      <div className="bg-white dark:bg-black flex flex-col items-center gap-3 dark:text-white w-full md:w-2/3">
         <h1 className="text-3xl text-center font-bold">Data Visualization</h1>
         <DateRangePicker {...dateRange} setDateRange={setDateRange} />
         {isLoading ? "Loading..." : <Charts data={data} />}
