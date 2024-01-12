@@ -14,23 +14,19 @@ import CustomToolTip from "./CustomTooltip";
 type TData = {
   DATE: string;
   STATION: string;
-  DP01_ATTRIBUTES: string;
-  PRCP_ATTRIBUTES: string;
   PRCP: string;
-  DP10: string;
-  DP10_ATTRIBUTES: string;
   DP01: string;
 };
 
 const Charts = (props: { data: TData[] }) => {
   const data = props.data.map((d) => ({
     ...d,
-    //making sure the data on y-axis is a number, not string.
     PRCP: parseInt(d.PRCP.trim()),
+    DP01: d.DP01 ? parseInt(d.DP01.trim()) : 0,
   }));
-
+  if (data.length === 0) return <p>No Data found....!</p>;
   return (
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data}>
         <Line
           type="monotone"
@@ -39,8 +35,21 @@ const Charts = (props: { data: TData[] }) => {
           activeDot={{ r: 6 }}
           isAnimationActive={true}
         />
+        <Line
+          type="monotone"
+          dataKey="DP01"
+          stroke="#8884d8"
+          activeDot={{ r: 6 }}
+          isAnimationActive={true}
+        />
         <CartesianGrid stroke="#ccc" strokeDasharray="3 3" opacity={0.5} />
-        <XAxis tickMargin={5} dataKey="DATE" tickLine={false} color="#000" />
+        <XAxis
+          tickMargin={5}
+          padding={{ left: 30 }}
+          dataKey="DATE"
+          tickLine={false}
+          color="#000"
+        />
         <YAxis tickLine={false} />
         <Tooltip labelClassName="text-black " content={CustomToolTip} />
         <Legend />

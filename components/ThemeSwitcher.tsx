@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function ThemeSwitcher() {
+const ThemeSwitcher = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = () => {
     setIsDarkMode((p) => !p);
@@ -43,10 +43,11 @@ export default function ThemeSwitcher() {
         r={8}
         className={`${
           isDarkMode
-            ? " fill-purple-200 md:fill-purple-800"
-            : "fill-blue-200 md:fill-blue-800"
+            ? " fill-purple-200 md:fill-medium-purple"
+            : "fill-blue-200 md:fill-medium-purple"
         } transition-all duration-500 `}
       />
     </svg>
   );
-}
+};
+export default ThemeSwitcher;
