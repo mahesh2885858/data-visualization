@@ -2,29 +2,19 @@
 
 import { useState, useEffect } from "react";
 
-export default function ThemeSwitcher() {
-  const [darkMode, setDarkMode] = useState(true);
+const ThemeSwitcher = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = () => {
-    setDarkMode((p) => {
-      if (p) {
-        localStorage.theme = "light";
-      } else {
-        localStorage.theme = "dark";
-      }
-      return !p;
-    });
+    setIsDarkMode((p) => !p);
+    document.documentElement.classList.toggle("dark");
   };
   useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+      setIsDarkMode(true);
+      return;
     }
-  }, [darkMode]);
+  }, []);
 
   return (
     <svg
@@ -42,21 +32,22 @@ export default function ThemeSwitcher() {
         width={48}
         rx={12}
         className={`${
-          darkMode
+          isDarkMode
             ? " fill-purple-950 md:fill-purple-200"
             : "fill-blue-950 md:fill-blue-200"
         } transition-all duration-500 `}
       />
       <circle
-        cx={darkMode ? 36 : 12}
+        cx={isDarkMode ? 36 : 12}
         cy={11}
         r={8}
         className={`${
-          darkMode
-            ? " fill-purple-200 md:fill-purple-800"
-            : "fill-blue-200 md:fill-blue-800"
+          isDarkMode
+            ? " fill-purple-200 md:fill-medium-purple"
+            : "fill-blue-200 md:fill-medium-purple"
         } transition-all duration-500 `}
       />
     </svg>
   );
-}
+};
+export default ThemeSwitcher;
