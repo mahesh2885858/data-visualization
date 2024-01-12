@@ -15,7 +15,9 @@ const StationInput = ({ setStation, station }: Props) => {
       className="bg-transparent rounded-sm dark:bg-black p-2 border border-black dark:border-white placeholder:text-sm placeholder:text-gray-500 focus:outline-none w-full md:w-2/3 cursor-pointer dark:[color-scheme:dark]"
     >
       {stations.map((s) => (
-        <option value={s}>{s}</option>
+        <option key={s} value={s}>
+          {s}
+        </option>
       ))}
     </select>
   );
