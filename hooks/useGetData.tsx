@@ -2,27 +2,33 @@ import { useEffect, useState } from "react";
 type Props = {
   from: string;
   to: string;
+  station: string;
 };
-const useGetData = ({ from, to }: Props) => {
+const useGetData = ({ from, to, station }: Props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     const getData = async () => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          `https://www.ncei.noaa.gov/access/services/data/v1?dataset=global-summary-of-the-year&dataTypes=DP01,DP05,DP10,DSND,DSNW,DT00,DT32,DX32,DX70,DX90,SNOW,PRCP&stations=ASN00084027&startDate=${from}&endDate=${to}&includeAttributes=true&format=json`
+          `${process.env.NEXT_PUBLIC_API_URL}${station}&startDate=${from}&endDate=${to}&format=json`
         );
+        if (!response.ok)
+          throw new Error("Something went wrong Please refresh the page");
         const data = await response.json();
         setData(data);
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
     getData();
-  }, [from, to]);
-  return { data, isLoading };
+  }, [from, to, station]);
+  return { data, isLoading, error };
 };
 export default useGetData;
